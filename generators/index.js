@@ -31,10 +31,12 @@ module.exports = class extends Generator {
 		})
 	}
 
-	writing() {
+	default() {
 		mkdirp(this.name)
 		this.destinationRoot(this.destinationPath(this.name))
-
+	}
+	writing() {
+		console.log('test:',this.templatePath())
 		this.fs.copy(this.templatePath(this.tmpDir + '/.storybook'), this.destinationPath('.storybook'))
 		this.fs.copy(this.templatePath(this.tmpDir + '/stories'), this.destinationPath('stories'))
 		this.fs.copyTpl(this.templatePath(this.tmpDir + '/_package.json'), this.destinationPath('package.json'), {
