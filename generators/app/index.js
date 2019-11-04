@@ -31,19 +31,11 @@ module.exports = class extends Generator {
 		})
 	}
 
-	default() {
-		mkdirp(this.name)
-		this.destinationRoot(this.destinationPath(this.name))
-	}
 	writing() {
-		this.fs.copy(this.templatePath(this.tmpDir + '/server'), this.destinationPath('server'), {
-			globOptions: {
-				ignore: ['**/node_modules', '**/package-lock.json']
-			}
+		this.fs.copy(this.templatePath(this.tmpDir + '/'), this.destinationPath(this.destinationRoot(this.name)), {
+			globOptions: { dot: true, ignore: ['**/node_modules', '**/package-lock.json'] }
 		})
-		this.fs.copy(this.templatePath(this.tmpDir + '/stories'), this.destinationPath('stories'))
-		this.fs.copy(this.templatePath(this.tmpDir + '/.storybook'), this.destinationPath('.storybook'))
-		this.fs.copy(this.templatePath(this.tmpDir + '/stories'), this.destinationPath('stories'))
+
 		this.fs.copyTpl(this.templatePath(this.tmpDir + '/_package.json'), this.destinationPath('package.json'), {
 			name: this.props.projectName.replace(/\s+/g, '-')
 		})
